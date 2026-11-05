@@ -1,6 +1,10 @@
-**Project:** KAPAS (Kayas/Pukpuk/Artisan): Digital Production and Order Management System for Moriones-Inspired Local Artisans in Marinduque
+## AI_DISCLOSURE
+**Project:** KAPAS (Kayas/Pukpuk/Artisan): Digital Production and Order Management System for Moriones-Inspired Local Artisans in Marinduque,
+
 **Section:** 8. AI Disclosure Progress
+
 **Status:** Provisional.
+
 **AI tool:** Claude
 
 ---
