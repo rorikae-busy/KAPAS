@@ -52,9 +52,9 @@ This is the new website design for our product management, can you create me a f
   - Changed the swatch as a placeholder for product images into an image tag.
   - Changed the color of the status
 
+**What we understood**
   - We learned the importance of using semantic HTML, following the design guidelines, and testing the responsiveness of a webpage.
-
   - We also understood that small UI details, such as colors and product images, are important for maintaining a consistent design.
 
-    - Change the color for status
+    
 
