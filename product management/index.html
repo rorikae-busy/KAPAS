@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Product Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <a class="brand" href="/" aria-label="KAPAS home">
+        <img src="/images/KAPAS_logo.svg" alt="KAPAS logo" width="90" height="130">
+        <span class="brand__name">KAPAS</span>
+      </a>
+
+      <nav class="sidebar__nav" aria-label="Main">
+        <ul>
+          <li><a href="products.html" aria-current="page">Products</a></li>
+          <li><a href="materials.html">Materials inventory</a></li>
+          <li><a href="orders.html">Orders</a></li>
+          <li><a href="/">View Storefront</a></li>
+          <li>
+            <a class="with-icon" href="logout">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+              Logout
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <footer class="sidebar__footer">
+        <p>Support Local Craft.<br>Keep Our Culture Alive.</p>
+      </footer>
+    </aside>
+
+    <!-- Main content -->
+    <main class="content" id="main">
+      <header class="page-header">
+        <h1>Product Management</h1>
+        <p>Manage your handcrafted products.</p>
+      </header>
+
+      <form class="toolbar" role="search" aria-label="Filter products">
+        <div class="search">
+          <label class="visually-hidden" for="search">Search products</label>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input class="field" type="search" id="search" name="q" placeholder="Search products...">
+        </div>
+
+        <div class="select">
+          <label class="visually-hidden" for="filter-category">Filter by category</label>
+          <select class="field" id="filter-category" name="category">
+            <option>All Categories</option>
+            <option>Masks</option>
+            <option>Souvenirs</option>
+            <option>Handicrafts</option>
+            <option>Accessories</option>
+          </select>
+        </div>
+
+        <a class="btn btn--gold" href="#add-product">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg>
+          Add product
+        </a>
+      </form>
+
+      <!-- Product list -->
+      <section class="panel" aria-labelledby="products-heading">
+        <h2 class="visually-hidden" id="products-heading">Product list</h2>
+        <div class="table-wrap" role="region" aria-labelledby="products-heading" tabindex="0">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Product</th>
+                <th scope="col">Category</th>
+                <th scope="col">Price</th>
+                <th scope="col">Qty</th>
+                <th scope="col">Status</th>
+                <th scope="col"><span class="visually-hidden">Actions</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row"><span class="product"><span class="swatch swatch--crimson" aria-hidden="true"></span><img class="product-image" id="uploaded-product-image" alt="" aria-hidden="true" hidden>Moriones Mask</span></th>
+                <td>Masks</td>
+                <td>₱1,200</td>
+                <td>12</td>
+                <td><span class="status status--in">In stock</span></td>
+                <td>
+                  <div class="actions">
+                    <button class="icon-btn" type="button" aria-label="Edit Moriones Mask"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg></button>
+                    <button class="icon-btn" type="button" aria-label="Delete Moriones Mask"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 7h14M9 7V4h6v3M7 7l1 13h8l1-13"/></svg></button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row"><span class="product"><span class="swatch swatch--navy" aria-hidden="true"></span>Centurion Plaque</span></th>
+                <td>Souvenirs</td>
+                <td>₱850</td>
+                <td>3</td>
+                <td><span class="status status--low">Low stock</span></td>
+                <td>
+                  <div class="actions">
+                    <button class="icon-btn" type="button" aria-label="Edit Centurion Plaque"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg></button>
+                    <button class="icon-btn" type="button" aria-label="Delete Centurion Plaque"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 7h14M9 7V4h6v3M7 7l1 13h8l1-13"/></svg></button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row"><span class="product"><span class="swatch swatch--gold" aria-hidden="true"></span>Woven Tray</span></th>
+                <td>Handicrafts</td>
+                <td>₱450</td>
+                <td>20</td>
+                <td><span class="status status--in">In stock</span></td>
+                <td>
+                  <div class="actions">
+                    <button class="icon-btn" type="button" aria-label="Edit Woven Tray"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg></button>
+                    <button class="icon-btn" type="button" aria-label="Delete Woven Tray"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 7h14M9 7V4h6v3M7 7l1 13h8l1-13"/></svg></button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row"><span class="product"><span class="swatch swatch--crimson" aria-hidden="true"></span>Mini Mask Keychain</span></th>
+                <td>Accessories</td>
+                <td>₱120</td>
+                <td>48</td>
+                <td><span class="status status--in">In stock</span></td>
+                <td>
+                  <div class="actions">
+                    <button class="icon-btn" type="button" aria-label="Edit Mini Mask Keychain"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg></button>
+                    <button class="icon-btn" type="button" aria-label="Delete Mini Mask Keychain"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 7h14M9 7V4h6v3M7 7l1 13h8l1-13"/></svg></button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Add product form -->
+      <section class="panel panel--form" id="add-product" aria-labelledby="add-heading">
+        <h2 id="add-heading">Add New Product</h2>
+
+        <form class="form" action="#" method="post" enctype="multipart/form-data">
+          <div class="form__field">
+            <label for="name">Name</label>
+            <input class="field" type="text" id="name" name="name" required>
+          </div>
+
+          <div class="form__field form__field--tall">
+            <label for="description">Description</label>
+            <textarea class="field" id="description" name="description" rows="5"></textarea>
+          </div>
+
+          <div class="form__field">
+            <label for="category">Category</label>
+            <input class="field" type="text" id="category" name="category" list="categories">
+            <datalist id="categories">
+              <option value="Masks">
+              <option value="Souvenirs">
+              <option value="Handicrafts">
+              <option value="Accessories">
+            </datalist>
+          </div>
+
+          <div class="form__field">
+            <label for="price">Price (₱)</label>
+            <input class="field" type="number" id="price" name="price" min="0" step="0.01" inputmode="decimal" required>
+          </div>
+
+          <div class="form__field">
+            <label for="quantity">Available Quantity</label>
+            <input class="field" type="number" id="quantity" name="quantity" min="0" step="1" inputmode="numeric" required>
+          </div>
+
+          <div class="form__field form__field--wide">
+            <label class="dropzone" for="image">
+              <span id="image-upload-label">Upload product image</span>
+              <input class="visually-hidden" type="file" id="image" name="image" accept="image/*">
+            </label>
+          </div>
+
+          <div class="form__actions">
+            <button class="btn btn--outline" type="reset">Cancel</button>
+            <button class="btn btn--navy" type="submit">Save product</button>
+          </div>
+        </form>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
