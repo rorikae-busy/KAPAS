@@ -19,6 +19,8 @@
 .corder__meta { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 10px; color: var(--muted); font-size: 0.86rem; }
 .corder__meta span { display: inline-flex; align-items: center; gap: 6px; }
 .corder__note { margin-top: 10px; padding: 10px 12px; border-radius: var(--radius); background: var(--cream); font-size: 0.9rem; }
+.corder__cancellation { background: var(--danger-bg); }
+.corder__cancel { margin-top: 12px; }
 
 /* Status tracker: Pending -> In production -> Ready for pickup -> Completed */
 .track { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin-top: 14px; padding: 0; list-style: none; }

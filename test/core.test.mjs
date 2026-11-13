@@ -70,7 +70,7 @@ test('auth: duplicate email, wrong password, logout, correct login, lockout', as
   await assert.rejects(login('maria@example.com', 'mask2026x'), /Too many/);
 });
 
-const { saveProduct, deleteProduct, placeOrder, setOrderStatus, ownerName, FormError,
+const { saveProduct, deleteProduct, placeOrder, setOrderStatus, cancelOrder, ownerName, FormError,
   saveMaterial, deleteMaterial, adjustMaterial, recordProduction, materialState } = await import('../js/shop.js');
 const { store: shared } = await import('../js/store.js');
 const img = 'data:image/jpeg;base64,/9j/AAAA';
@@ -161,10 +161,32 @@ test('shop: orders go to the seller, validate input, and completing adjusts stoc
   assert.equal(shared.find('products', mask.id).quantity, 2);
   await setOrderStatus(artisan, o.id, 'completed');
   assert.equal(shared.find('products', mask.id).quantity, 0);
+  await assert.rejects(cancelOrder(buyer, o.id, 'Changed my mind'), /Completed orders/);
   await setOrderStatus(artisan, o.id, 'completed');
   assert.equal(shared.find('products', mask.id).quantity, 0);
   await setOrderStatus(artisan, o.id, 'ready');
   assert.equal(shared.find('products', mask.id).quantity, 2);
+});
+
+test('shop: sellers can decline an order and customers cannot cancel it afterwards', async () => {
+  const o = await placeOrder(buyer, { productId: mask.id, quantity: '1', customerName: 'Tess Manlapaz', contact: '09171234567' });
+  const declined = await setOrderStatus(artisan, o.id, 'declined');
+  assert.equal(declined.status, 'declined');
+  await assert.rejects(cancelOrder(buyer, o.id, 'Changed my mind'), /declined by the seller/);
+  await assert.rejects(setOrderStatus(artisan, o.id, 'ready'), /Declined orders cannot be updated/);
+});
+
+test('shop: customers cancel only their own unfinished orders with a required reason', async () => {
+  const o = shared.where('orders', (order) => order.buyerId === buyer.id && order.status === 'ready')[0];
+  await assert.rejects(cancelOrder(buyer, o.id, '   '), (e) => e instanceof FormError && !!e.fields.reason);
+  await assert.rejects(cancelOrder(buyer, o.id, 'x'.repeat(301)), (e) => e instanceof FormError && !!e.fields.reason);
+  await assert.rejects(cancelOrder(shop, o.id, 'No longer needed'), /Only Customer \(Buyer\) accounts can cancel orders/);
+  await assert.rejects(cancelOrder(artisan, o.id, 'No longer needed'), /Only Customer \(Buyer\) accounts can cancel orders/);
+  const cancelled = await cancelOrder(buyer, o.id, ' Plans changed ');
+  assert.equal(cancelled.status, 'cancelled');
+  assert.equal(cancelled.cancellationReason, 'Plans changed');
+  await assert.rejects(cancelOrder(buyer, o.id, 'Again'), /already been cancelled/);
+  await assert.rejects(setOrderStatus(artisan, o.id, 'pending'), /Cancelled orders/);
 });
 
 test('profile: sellers and customers update their own details; account type stays', async () => {

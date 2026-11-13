@@ -2,9 +2,9 @@
 import { store } from '../../js/store.js';
 import { guard, roleLabel, updateProfile, current, ValidationError } from '../../js/auth.js';
 import { siteHeader, siteFooter } from '../../js/layout.js';
-import { esc, peso, date, toast, clearErrors, showErrors, $, emptyState } from '../../js/ui.js';
+import { esc, peso, date, toast, clearErrors, showErrors, $, emptyState, wireDialog } from '../../js/ui.js';
 import { icon } from '../../js/icons.js';
-import { STATUSES, ordersOf, ownerName } from '../../js/shop.js';
+import { STATUSES, CANCELLED_STATUS, DECLINED_STATUS, cancelOrder, ordersOf, ownerName, FormError } from '../../js/shop.js';
 import { matches } from '../../js/filters.js';
 
 const user = await guard(['customer']);
@@ -15,27 +15,39 @@ $('browse').insertAdjacentHTML('afterbegin', icon('store', 18));
 $('role').textContent = roleLabel(user.role) + ' account';
 
 const label = Object.fromEntries(STATUSES);
-const tone = { pending: 'pill--gold', in_production: 'pill--info', ready: 'pill--warn', completed: 'pill--ok' };
+label[CANCELLED_STATUS] = 'Cancelled';
+label[DECLINED_STATUS] = 'Declined';
+const tone = { pending: 'pill--gold', declined: 'pill--danger', in_production: 'pill--info', ready: 'pill--warn', completed: 'pill--ok' };
 const order = STATUSES.map(([k]) => k);
 const day = (d) => date(d + 'T00:00');
 const views = {
-  active: (o) => o.status !== 'completed',
+  active: (o) => !['completed', CANCELLED_STATUS, DECLINED_STATUS].includes(o.status),
   ready: (o) => o.status === 'ready',
   mto: (o) => !!o.madeToOrder,
   completed: (o) => o.status === 'completed',
+  cancelled: (o) => o.status === CANCELLED_STATUS,
+  declined: (o) => o.status === DECLINED_STATUS,
 };
+const cancelDialog = wireDialog($('cancelDialog'), () => {
+  $('cancelForm').reset();
+  clearErrors($('cancelForm'));
+  $('cancelSubmit').disabled = false;
+});
 
 const track = (o) => {
+  if ([CANCELLED_STATUS, DECLINED_STATUS].includes(o.status)) return '';
   const at = order.indexOf(o.status);
   return `<ol class="track" aria-label="Order progress: ${label[o.status]}">${STATUSES.map(([k, v], i) =>
     `<li class="${i < at ? 'is-done' : i === at ? 'is-now' : ''}"${i === at ? ' aria-current="step"' : ''}>${v}</li>`).join('')}</ol>`;
 };
 const card = (o) => `<li>
   <div class="corder__head"><div><h3>${o.items.map((i) => i.qty + ' × ' + esc(i.name)).join(', ')}</h3><small>From ${esc(ownerName(o.sellerId))} · sent ${date(o.createdAt)}</small></div><strong class="corder__total">${peso(o.total)}</strong></div>
-  <div class="corder__tags"><span class="pill ${tone[o.status]}">${label[o.status]}</span>${o.madeToOrder ? '<span class="pill pill--info">Made-to-order request</span>' : ''}</div>
+  <div class="corder__tags"><span class="pill ${tone[o.status] || 'pill--danger'}">${label[o.status]}</span>${o.madeToOrder ? '<span class="pill pill--info">Made-to-order request</span>' : ''}</div>
   ${track(o)}
   <p class="corder__meta">${o.pickupDate ? `<span>${icon('calendar', 14)} Pickup ${day(o.pickupDate)}</span>` : ''}<span>${icon('phone', 14)} Seller contacts you at ${esc(o.contact)}</span></p>
   ${o.notes ? `<p class="corder__note">${esc(o.notes)}</p>` : ''}
+  ${o.cancellationReason ? `<p class="corder__note corder__cancellation"><strong>${o.status === DECLINED_STATUS ? 'Decline reason' : 'Cancellation reason'}:</strong> ${esc(o.cancellationReason)}</p>` : ''}
+  ${!['completed', CANCELLED_STATUS, DECLINED_STATUS].includes(o.status) ? `<button type="button" class="btn btn--danger btn--sm corder__cancel" data-cancel-order="${esc(o.id)}">Cancel order</button>` : ''}
 </li>`;
 
 function render() {
@@ -46,7 +58,7 @@ function render() {
   $('nDone').textContent = all.filter(views.completed).length;
   const v = $('fView').value, term = $('q').value;
   document.querySelectorAll('[data-filter]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filter === v)));
-  const list = all.filter((o) => (!v || views[v](o)) && matches(term, ownerName(o.sellerId), o.notes, o.items.map((i) => i.name).join(' ')));
+  const list = all.filter((o) => (!v || views[v](o)) && matches(term, ownerName(o.sellerId), o.notes, o.cancellationReason, o.items.map((i) => i.name).join(' ')));
   $('orderTools').hidden = !all.length;
   $('list').innerHTML = list.map(card).join('');
   $('empty').hidden = list.length > 0;
@@ -59,6 +71,30 @@ document.querySelectorAll('[data-filter]').forEach((b) => (b.onclick = () => { $
 $('q').addEventListener('input', render);
 $('fView').addEventListener('change', render);
 store.subscribe(render); render();
+
+$('list').addEventListener('click', (e) => {
+  const button = e.target.closest('[data-cancel-order]');
+  if (!button) return;
+  $('cancelForm').dataset.orderId = button.dataset.cancelOrder;
+  cancelDialog.open();
+});
+$('cancelForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const form = e.currentTarget;
+  clearErrors(form);
+  const button = $('cancelSubmit');
+  button.disabled = true;
+  try {
+    await cancelOrder(user, form.dataset.orderId, form.elements.reason.value);
+    cancelDialog.close();
+    toast('Order cancelled');
+  } catch (err) {
+    if (err instanceof FormError) showErrors(form, err.fields);
+    else toast(err.message, 'err');
+  } finally {
+    button.disabled = false;
+  }
+});
 
 // Profile
 const form = $('profile');

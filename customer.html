@@ -39,7 +39,7 @@
         <form class="toolbar corders__tools" role="search" aria-label="Filter my orders" onsubmit="return false" id="orderTools">
           <div class="search"><label class="sr" for="q">Search my orders</label><span data-icon="search"></span><input class="control" type="search" id="q" placeholder="Product or seller…" autocomplete="off"></div>
           <label class="sr" for="fView">Show</label>
-          <select class="control" id="fView"><option value="">All orders (history)</option><option value="active">Active orders</option><option value="ready">Ready for pickup</option><option value="mto">Made-to-order requests</option><option value="completed">Completed</option></select>
+          <select class="control" id="fView"><option value="">All orders (history)</option><option value="active">Active orders</option><option value="ready">Ready for pickup</option><option value="mto">Made-to-order requests</option><option value="completed">Completed</option><option value="declined">Declined</option><option value="cancelled">Cancelled</option></select>
         </form>
         <ul class="corders" id="list"></ul>
         <div class="empty dash-empty" id="empty" hidden></div>
@@ -58,6 +58,16 @@
       </section>
     </div>
   </main>
+
+  <dialog class="modal modal--sm" id="cancelDialog" aria-labelledby="cancelTitle">
+    <form id="cancelForm" novalidate>
+      <div class="modal__head"><div><h2 id="cancelTitle">Cancel this order?</h2><p>Please tell the seller why you are cancelling. A reason is required.</p></div><button type="button" class="icon-btn" data-close aria-label="Close">×</button></div>
+      <div class="modal__body">
+        <div class="field"><label for="cancelReason">Reason for cancellation</label><textarea id="cancelReason" name="reason" rows="4" maxlength="300" required aria-describedby="err-reason" placeholder="Enter your reason"></textarea><p class="error" id="err-reason"></p></div>
+      </div>
+      <div class="modal__foot"><button type="button" class="btn btn--ghost" data-close>Keep order</button><button type="submit" class="btn btn--crimson" id="cancelSubmit">Cancel order</button></div>
+    </form>
+  </dialog>
 
   <footer id="site-footer"></footer>
   <script type="module" src="pages/customer/customer.js"></script>

@@ -16,8 +16,8 @@ function counts(u) {
     low: store.where('materials', (m) => m.ownerId === u.id && m.quantity <= m.reorderLevel).length,
   };
 }
-// Customers: orders that are not completed yet.
-const activeOrders = (u) => (isCustomer(u) ? store.where('orders', (o) => o.buyerId === u.id && o.status !== 'completed').length : 0);
+// Customers: orders that are still active.
+const activeOrders = (u) => (isCustomer(u) ? store.where('orders', (o) => o.buyerId === u.id && !['completed', 'cancelled', 'declined'].includes(o.status)).length : 0);
 
 const signOut = () => { logout(); location.replace('login.html?signed-out=1'); };
 

@@ -84,7 +84,7 @@ Business rules live only in `js/shop.js` and `js/auth.js`. Pages call them and n
 - **Data stays on one device.** There is no server or shared database. A customer on another phone cannot see an artisan's catalog. For a demo, use one browser with several tabs.
 - **Sign-in is local.** Passwords are hashed, every protected page checks the account type, and the business rules check it again, but anyone with access to the browser's developer tools can read or change the stored data. It is not a replacement for server-side authentication.
 - **Clearing browser data erases everything.** Use the backup button.
-- **Order requests have no decline status.** The four statuses follow the paper. A seller who cannot take a request has to contact the customer directly.
+- **Sellers can decline an order.** An order can end as Declined when the seller cannot take it, or as Cancelled by the customer before pickup. The rest of the status flow follows the paper.
 - **Materials are not linked to products automatically.** The amount of material used is entered when finished pieces are recorded.
 - **Operational validation with mask-makers has not been done yet.**
 - Layout, forms and photo upload were checked in Chromium on desktop, tablet and phone widths.

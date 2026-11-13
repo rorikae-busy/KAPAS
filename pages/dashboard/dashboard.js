@@ -20,7 +20,7 @@ $('role').textContent = roleLabel(user.role) + ' account';
 $('roleText').textContent = 'Here is how your products, materials and customer orders are doing today.';
 
 const label = Object.fromEntries(STATUSES);
-const tone = { pending: 'pill--gold', in_production: 'pill--info', ready: 'pill--warn', completed: 'pill--ok' };
+const tone = { pending: 'pill--gold', declined: 'pill--danger', in_production: 'pill--info', ready: 'pill--warn', completed: 'pill--ok' };
 
 function render() {
   const ps = store.where('products', (p) => p.ownerId === user.id), os = store.where('orders', (o) => o.sellerId === user.id);
@@ -31,7 +31,7 @@ function render() {
   $('nLow').textContent = mats.filter((m) => m.quantity <= m.reorderLevel).length;
   $('nDone').textContent = os.filter((o) => o.status === 'completed').length;
 
-  $('nMto').textContent = os.filter((o) => o.madeToOrder && o.status !== 'completed').length;
+  $('nMto').textContent = os.filter((o) => o.madeToOrder && !['completed', 'cancelled', 'declined'].includes(o.status)).length;
   const recent = os.slice().sort((a, b) => b.createdAt - a.createdAt).slice(0, 5);
   $('recent').innerHTML = recent.map((o) => `<li><a class="feed__row" href="orders.html">
       <span class="feed__icon">${icon('clipboard', 18)}</span>

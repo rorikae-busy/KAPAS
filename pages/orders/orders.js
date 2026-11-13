@@ -5,7 +5,7 @@ import { guard } from '../../js/auth.js';
 import { adminShell } from '../../js/layout.js';
 import { esc, peso, toast, $, date, emptyState } from '../../js/ui.js';
 import { icon } from '../../js/icons.js';
-import { STATUSES, setOrderStatus } from '../../js/shop.js';
+import { STATUSES, CANCELLED_STATUS, DECLINED_STATUS, setOrderStatus } from '../../js/shop.js';
 import { matches } from '../../js/filters.js';
 
 const user = await guard(['seller']);
@@ -13,7 +13,9 @@ await adminShell('orders.html');
 document.querySelectorAll('[data-icon]').forEach((el) => { el.innerHTML = icon(el.dataset.icon, 18); });
 
 const label = Object.fromEntries(STATUSES);
-const colIcon = { pending: 'inbox', in_production: 'hammer', ready: 'box', completed: 'checkCircle' };
+label[CANCELLED_STATUS] = 'Cancelled';
+label[DECLINED_STATUS] = 'Declined';
+const colIcon = { pending: 'inbox', declined: 'alert', in_production: 'hammer', ready: 'box', completed: 'checkCircle', cancelled: 'alert' };
 const day = (d) => date(d + 'T00:00');
 
 const card = (o) => `<article class="ocard">
@@ -23,7 +25,7 @@ const card = (o) => `<article class="ocard">
   ${o.pickupDate ? `<p class="ocard__meta">${icon('calendar', 14)} Pickup ${day(o.pickupDate)}</p>` : ''}
   ${o.madeToOrder ? `<p class="ocard__meta ocard__mto">${icon('tag', 14)} Made-to-order request</p>` : ''}
   ${o.notes ? `<p class="ocard__note">${esc(o.notes)}</p>` : ''}
-  <div class="field ocard__status"><label for="s-${o.id}">Status</label><select id="s-${o.id}" data-id="${o.id}">${STATUSES.map(([k, v]) => `<option value="${k}"${k === o.status ? ' selected' : ''}>${v}</option>`).join('')}</select></div>
+  ${o.status === CANCELLED_STATUS || o.status === DECLINED_STATUS ? `<p class="ocard__note">${o.status === DECLINED_STATUS ? 'Declined by seller' : 'Cancelled by customer'}${o.cancellationReason ? `: ${esc(o.cancellationReason)}` : ''}</p>` : `<div class="field ocard__status"><label for="s-${o.id}">Status</label><select id="s-${o.id}" data-id="${o.id}">${STATUSES.map(([k, v]) => `<option value="${k}"${k === o.status ? ' selected' : ''}>${v}</option>`).join('')}</select></div>`}
 </article>`;
 
 const sorters = {
@@ -36,7 +38,7 @@ function render() {
   const all = store.where('orders', (o) => o.sellerId === user.id);
   const term = $('q').value;
   const type = $('fType').value;
-  const mine = all.filter((o) => (!type || (type === 'mto') === !!o.madeToOrder) && matches(term, o.customerName, o.contact, o.notes, o.items.map((i) => i.name).join(' ')))
+  const mine = all.filter((o) => (!type || (type === 'mto') === !!o.madeToOrder) && matches(term, o.customerName, o.contact, o.notes, o.cancellationReason, o.items.map((i) => i.name).join(' ')))
     .sort(sorters[$('sort').value] || sorters.newest);
   $('orderTools').hidden = !all.length;
   $('empty').hidden = mine.length > 0; $('board').hidden = !mine.length;
@@ -44,7 +46,7 @@ function render() {
     ? emptyState('search', 'No orders match', 'Try another name, contact or product.')
     : emptyState('inbox', 'No order requests yet', 'When someone sends one from your product page, it shows up here as Pending.', 'Kappy peeking.png');
   $('count').textContent = all.length ? `${mine.length} of ${all.length} order${all.length === 1 ? '' : 's'}` : '';
-  $('board').innerHTML = STATUSES.map(([k, v]) => {
+  $('board').innerHTML = [...STATUSES, [CANCELLED_STATUS, 'Cancelled']].map(([k, v]) => {
     const col = mine.filter((o) => o.status === k);
     return `<section class="col col--${k}" aria-label="${v}"><h2 class="col__head"><span class="col__icon">${icon(colIcon[k], 16)}</span>${v} <span class="col__count">${col.length}</span></h2>
       <div class="col__body">${col.map(card).join('') || '<p class="col__empty">Nothing here</p>'}</div></section>`;

@@ -9,7 +9,9 @@ function requireSeller(user, action) {
   if (roleOf(user) !== 'seller') throw new Error('Only Artisan/Business (Seller) accounts can ' + action + '.');
 }
  
-export const STATUSES = [['pending', 'Pending'], ['in_production', 'In production'], ['ready', 'Ready for pickup'], ['completed', 'Completed']];
+export const STATUSES = [['pending', 'Pending'], ['declined', 'Declined'], ['in_production', 'In production'], ['ready', 'Ready for pickup'], ['completed', 'Completed']];
+export const CANCELLED_STATUS = 'cancelled';
+export const DECLINED_STATUS = 'declined';
 export class FormError extends Error {
   constructor(fields) { super('Check the highlighted fields.'); this.fields = fields; }
 }
@@ -85,6 +87,8 @@ export async function setOrderStatus(user, id, status) {
   requireSeller(user, 'update order statuses');
   const o = store.find('orders', id);
   if (!o || o.sellerId !== user.id) throw new Error('You can only update your own orders.');
+  if (o.status === CANCELLED_STATUS) throw new Error('Cancelled orders cannot be updated.');
+  if (o.status === DECLINED_STATUS) throw new Error('Declined orders cannot be updated.');
   if (!STATUSES.some(([k]) => k === status)) throw new Error('Unknown status.');
   const patch = { status };
   const shift = status === 'completed' && !o.stockDeducted ? -1 : status !== 'completed' && o.stockDeducted ? 1 : 0;
@@ -96,6 +100,21 @@ export async function setOrderStatus(user, id, status) {
     patch.stockDeducted = shift < 0;
   }
   return store.update('orders', id, patch);
+}
+
+export async function cancelOrder(user, id, reason) {
+  if (roleOf(user) !== 'customer') throw new Error('Only Customer (Buyer) accounts can cancel orders.');
+  const o = store.find('orders', id);
+  if (!o || o.buyerId !== user.id) throw new Error('You can only cancel your own orders.');
+  if (o.status === 'completed') throw new Error('Completed orders cannot be cancelled.');
+  if (o.status === DECLINED_STATUS) throw new Error('This order was declined by the seller and cannot be cancelled.');
+  if (o.status === CANCELLED_STATUS) throw new Error('This order has already been cancelled.');
+  const cancellationReason = String(reason ?? '').trim();
+  const errors = {};
+  if (!cancellationReason) errors.reason = 'Enter a reason for cancelling this order.';
+  else if (cancellationReason.length > 300) errors.reason = 'Keep the reason under 300 characters.';
+  if (Object.keys(errors).length) throw new FormError(errors);
+  return store.update('orders', id, { status: CANCELLED_STATUS, cancellationReason });
 }
  
 // ---- Materials (Feature 2) ----
