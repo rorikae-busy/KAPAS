@@ -23,6 +23,28 @@ I checked the figures against both source pages (PSA: 8.6% of GDP, PhP 2.09 tril
 Ghincel Mae B. Luslos
 
 ---
+## AI_DISCLOSURE (For Paper) - Project Manuscript
+
+**AI Tools:**
+
+**Task:**
+
+
+**Section:**
+
+
+**Exact Prompt:**
+
+
+**AI Output:**
+
+
+**Validation Method:**
+
+
+**Responsible Member:**
+Ghincel Mae B. Luslos
+---
 ## AI_DISCLOSURE (For Feature 1)
 **Project:** KAPAS (Kayas/Pukpuk/Artisan): Digital Production and Order Management System for Moriones-Inspired Local Artisans in Marinduque,
 
