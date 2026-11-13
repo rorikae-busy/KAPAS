@@ -1,24 +1,26 @@
-## AI_DISCLOSURE (For Paper)
+## AI_DISCLOSURE (For Paper) - Week 2
 
 ## 1. Section 2-  Identified Problem 
 
-**AI-assisted task:**
+**AI Tools:** Claude
 
+**Task:**
 Drafting of the sector context (PSA data) and local context (Inquirer article) paragraphs from two links provided by the group; advice on the order of sector context and local context; evaluation of whether the two sources are sufficient to identify the problem; English version of the paragraphs. The paragraphs were AI-drafted, not only proofread.
 
-**Affected section:**
-
+**Section:**
 Section 2 – Identified Problem (Sector Context, Local Context, references [1] and [2]).
 
-**Prompt:**
+**Exact Prompt:**
+Become my research assistant help me to write the identified problem section. Write a sector context paragraph from the PSA tourism page and a local context paragraph from the Inquirer article then judge whether these sources are enough to identify the problem. Two links lang ang pwede mong gamitin: https://psa.gov.ph/statistics/tourism at yung Inquirer article about sa Q1 2024, https://canadianinquirer.net/2024/05/12/marinduque-tourism-sector-posts-strong-q1-performance/. For sector context them, tapos local context gumawa ka ng isang sector context paragraph galing sa PSA tourism page at isang local context paragraph galing sa Inquirer article. Then judge mo kung enough ba talaga yung dalawang sources to identify the problem. Wag mo sabihing may problema ang mga artisan if hindi naman pinapakita ng sources, and be honest IF gaano ba talaga kafit ito sa project. I ONLY NEED 1 sector context paragraph and local context.
 
-Become my research assistant help me to write the Identified Problem section. Write a sector context paragraph from the PSA tourism page and a local context paragraph from the Inquirer article; then judge whether these sources are enough to identify the problem. Project KAPAS, tourism and cultural innovation, Marinduque which is sources limited to https://psa.gov.ph/statistics/tourism and the Inquirer Q1 2024 article https://canadianinquirer.net/2024/05/12/marinduque-tourism-sector-posts-strong-q1-performance/ . Use only the two links sector context first, then local context; do not claim the artisans have problems the sources do not show; be honest about source fit; write in English with IEEE citations. One sector context paragraph, one local context paragraph, IEEE references, and an honest evaluation of source sufficiency.
+**AI Output:**
+Draft sector context paragraph, draft local context paragraph, and an evaluation of source sufficiency.
 
-**Validation evidence:**
+**Validation Method:**
+I checked the figures against both source pages (PSA: 8.6% of GDP, PhP 2.09 trillion, and 6.21 million jobs in 2023; Inquirer: over 16,000 visitors in Q1 2024) and went over the citation details too. Neither source says anything about artisans, so we’ll still need evidence from artisan interviews or surveys to show how they actually operate.
 
-The AI compared the figures against the text of both web pages when drafting (PSA: 8.6% of GDP, PhP 2.09 trillion, 6.21 million jobs in 2023; Inquirer: over 16,000 visitors in Q1 2024). Our members confirm it by open both links and confirm each figure and the citation details before submission. The AI advised that the two sources, support sector and local context only and do not prove the artisans' problem, operational evidence from artisan interviews or surveys is still required.
-
-
+**Responsible Member:**
+Ghincel Mae B. Luslos
 
 ---
 ## AI_DISCLOSURE (For Feature 1)
