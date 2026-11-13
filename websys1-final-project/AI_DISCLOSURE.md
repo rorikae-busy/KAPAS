@@ -115,13 +115,16 @@ Not produced by AI: The UI design and layout
  - Tested keyboard navigation (Tab through links, buttons, and form fields): passed.
  - Found that the status indicator colors did not match the design, and that product images were shown as color swatches instead of image tags.
 
+**Responsible Member:**
+Ghincel Mae B. Luslos
+
 ---
 
 **AI Tool:** Lovable
 
 **Task:** Create a complete web-based KAPAS system.
 
-**Section:** Entire Web Application – Frontend, Authentication, LocalDatabase, Product Management, Order Management.
+**Section:** Entire Web Application 
 
 **Exact Prompt:**
 
@@ -138,10 +141,13 @@ The 2 account must have:
 - Verify role-based dashboards and permissions.
 - Test product management and image uploads.
 - Test customer ordering and made-to-order requests.
+- Test all core features.
 - Verify order tracking and local database persistence.
 - Test all navigation, buttons, and forms.
 - Check responsiveness and production build compatibility.
 
+**Responsible Member:**
+Ghincel Mae B. Luslos
 
 ---
 
