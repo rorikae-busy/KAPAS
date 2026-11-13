@@ -43,10 +43,10 @@ Ghincel Mae B. Luslos
 
 
 **Responsible Member:**
-Ghincel Mae B. Luslos
+
 
 ---
-## AI_DISCLOSURE (For Feature 1)
+## AI_DISCLOSURE (Software Development)
 
 **AI Tool:** Claude
 
@@ -62,8 +62,18 @@ Not produced by AI: The UI design and layout
 
 **Validation Method:**
 
-Opened index.html in a browser and compared it with Frame.png.
-Reviewed the HTML structure and confirmed the semantic tags were used correctly.
-Tested the layout at desktop, tablet, and mobile widths: passed.
-Tested keyboard navigation (Tab through links, buttons, and form fields): passed.
-Found that the status indicator colors did not match the design, and that product images were shown as color swatches instead of image tags.
+---
+
+**AI Tool:** 
+
+**Task:** 
+
+**Section:** 
+
+**Exact Prompt:** 
+
+**AI Output:** 
+
+**Validation Method:**
+
+ that product images were shown as color swatches instead of image tags.
