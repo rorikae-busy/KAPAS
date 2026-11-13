@@ -27,9 +27,9 @@ Ghincel Mae B. Luslos
 
 **AI Tools:** Gemini
 
-**Task:**Outlining step-by-step test cases and passing criteria for the four core features prior to final system verification.
+**Task:** Outlining step-by-step test cases and passing criteria for the four core features prior to final system verification.
 
-**Section:**Chapter III – Results and Discussion (Testing Execution / Table 3) 
+**Section:** Chapter III – Results and Discussion (Testing Execution / Table 3) 
 
 **Exact Prompt:** "So, based on the four core features, magte-test ako ngayon gamit yung aming KAPAS. So, please indicate ano yung mga kailangan kong i-test para ma-verify natin kung talagang lahat ng core features is nag pass and not failed."
 
@@ -44,35 +44,35 @@ Ghincel Mae B. Luslos
 
 **AI Tools:** Gemini
 
-**Task:**Drafting and refining the single-paragraph IEEE-style Abstract and standardized Keywords using a grounded, objective tone.
+**Task:** Drafting and refining the single-paragraph IEEE-style Abstract and standardized Keywords using a grounded, objective tone.
 
-**Section:**Abstract & Keywords 
+**Section:** Abstract & Keywords 
 
-**Exact Prompt:**"Based on the information here, let us now construct the abstract. Remember: [150–250 words. In one paragraph summarize: local problem/context; objective; development approach and technology; 3+ implemented features; actual evaluation results; principal conclusion/limitations. Write after final testing. Avoid unmeasured claims.] Keywords: [sector], [web-based solution], [frontend technology], [problem domain]" (Followed by: "Pwede bang huwag masyadong pabanguhin like 100% words like that. We don't boast") 
+**Exact Prompt:** "Based on the information here, let us now construct the abstract. Remember: [150–250 words. In one paragraph summarize: local problem/context; objective; development approach and technology; 3+ implemented features; actual evaluation results; principal conclusion/limitations. Write after final testing. Avoid unmeasured claims.] Keywords: [sector], [web-based solution], [frontend technology], [problem domain]" (Followed by: "Pwede bang huwag masyadong pabanguhin like 100% words like that. We don't boast") 
 
-**AI Output:**Generated a 188-word single-paragraph abstract summarizing the local artisan problem, KAPAS system objectives, client-side tech stack (HTML5, CSS3, Vanilla JS, IndexedDB, BroadcastChannel, Web Crypto API), SDLC/T.R.A.C.E. methodology, four core features, objective functional testing outcomes, and local storage limitations, accompanied by four domain-aligned keywords. 
+**AI Output:** Generated a 188-word single-paragraph abstract summarizing the local artisan problem, KAPAS system objectives, client-side tech stack (HTML5, CSS3, Vanilla JS, IndexedDB, BroadcastChannel, Web Crypto API), SDLC/T.R.A.C.E. methodology, four core features, objective functional testing outcomes, and local storage limitations, accompanied by four domain-aligned keywords. 
 
-**Validation Method:**Checked word count compliance, verified accuracy against the actual KAPAS codebase and test results, and cross-checked that all exaggerated or unmeasured claims were removed. 
+**Validation Method:** Checked word count compliance, verified accuracy against the actual KAPAS codebase and test results, and cross-checked that all exaggerated or unmeasured claims were removed. 
 
-**Responsible Member:**Kayleigh Plurin F. Rosales
+**Responsible Member:** Kayleigh Plurin F. Rosales
 
 ---
 
 ## AI_DISCLOSURE (For Paper) - Project Manuscript
 
-**AI Tools:**Gemini
+**AI Tools:** Gemini
 
-**Task:**Filling in missing evaluation findings and technical limitations in the Results and Discussion section based on actual local testing. 
+**Task:** Filling in missing evaluation findings and technical limitations in the Results and Discussion section based on actual local testing. 
 
-**Section:**Chapter III – Results and Discussion (Functional Verification
+**Section:** Chapter III – Results and Discussion (Functional Verification
 
-**Exact Prompt:**"May hindi pala ako na-recheck dun sa gawa nung groupmate ko. Meron siyang iniwang bracket na hindi naman niya na-fill uppan. Pakilagyan mo ng info. This: The functional verification was conducted to determine whether the main features of KAPAS performed according to their intended purposes... Based on the testing results, [discuss which features passed, partially passed, or failed]..." 
+**Exact Prompt:** "May hindi pala ako na-recheck dun sa gawa nung groupmate ko. Meron siyang iniwang bracket na hindi naman niya na-fill uppan. Pakilagyan mo ng info. This: The functional verification was conducted to determine whether the main features of KAPAS performed according to their intended purposes... Based on the testing results, [discuss which features passed, partially passed, or failed]..." 
 
-**AI Output:**Provided two paragraphs detailing that all four core features passed functional verification in a local desktop environment, explaining the viability of the client-side architecture, and outlining actual limitations.
+**AI Output:**-Provided two paragraphs detailing that all four core features passed functional verification in a local desktop environment, explaining the viability of the client-side architecture, and outlining actual limitations.
 
-**Validation Method:**Cross-referenced the completed text with the actual functional testing checklist results (Table 3) and verified that the stated limitations accurately reflect the system's current scope. 
+**Validation Method:** Cross-referenced the completed text with the actual functional testing checklist results (Table 3) and verified that the stated limitations accurately reflect the system's current scope. 
 
-**Responsible Member:**Kayleigh Plurin F. Rosales
+**Responsible Member:** Kayleigh Plurin F. Rosales
 
 ---
 
@@ -94,30 +94,6 @@ Ghincel Mae B. Luslos
 
 ---
 
-## AI_DISCLOSURE (For Paper) - Project Manuscript
-
-**AI Tools:**
-
-**Task:**
-
-
-**Section:**
-
-
-**Exact Prompt:**
-
-
-**AI Output:**
-
-
-**Validation Method:**
-
-
-**Responsible Member:**
-
-
----
-
 ## AI_DISCLOSURE (Software Development)
 
 **AI Tool:** Claude
@@ -132,21 +108,40 @@ Ghincel Mae B. Luslos
 
 Not produced by AI: The UI design and layout
 
-**Validation Method:**  that product images were shown as color swatches instead of image tags.
+**Validation Method:**  
+ - Opened index.html in a browser and compared it with Frame.png.
+ - Reviewed the HTML structure and confirmed the semantic tags were used correctly.
+ - Tested the layout at desktop, tablet, and mobile widths: passed.
+ - Tested keyboard navigation (Tab through links, buttons, and form fields): passed.
+ - Found that the status indicator colors did not match the design, and that product images were shown as color swatches instead of image tags.
 
 ---
 
-**AI Tool:** 
+**AI Tool:** Lovable
 
-**Task:** 
+**Task:** Create a complete web-based KAPAS system.
 
-**Section:** 
+**Section:** Entire Web Application – Frontend, Authentication, LocalDatabase, Product Management, Order Management.
 
-**Exact Prompt:** 
+**Exact Prompt:**
 
-**AI Output:** 
+" Act as a software developer and build a complete, working web system called KAPAS (Kayas/Pukpok/Artisan): Digital Production and Order Management System for Moriones-Inspired Local Artisans in Marinduque. It should secure login, have same storefront, a separate dashboard for each account type, a local database, and working create, read, update, and delete functions. Every button, form, and navigation link has to work. Dapat lahat ng data ay naka saved at loaded from IndexedDB. The interface should look clean and professional, and it has responsiveness daptat mag work on desktop, tablet, and mobile. Keep the project structure easy to maintain. Also share ko yung existing HTML and CSS file. Gamiti ito as the design reference and apply mo itong style sa other features. Must have this feature, Product Catalog Management, Production and Material Inventory Tracking, Customer Order Management, Online Product Catalog for Customer
+
+The 2 account must have:
+- Artisan/Business (Seller): can register, manage a profile, add, edit, and delete products, upload product images, manage inventory, receive customer orders, and handle made-to-order requests.
+- Customer (Buyer): can register, browse and search products, view product details, place orders, submit made-to-order requests, track orders, and manage a profile. "
+
+**AI Output:** A complete KAPAS web application with functional seller and customer accounts, dashboards, product management, order management, local database, and responsive UI/UX.
 
 **Validation Method:**
+- Test registration and login for both account types.
+- Verify role-based dashboards and permissions.
+- Test product management and image uploads.
+- Test customer ordering and made-to-order requests.
+- Verify order tracking and local database persistence.
+- Test all navigation, buttons, and forms.
+- Check responsiveness and production build compatibility.
+
 
 ---
 
