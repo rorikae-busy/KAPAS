@@ -1,95 +1,114 @@
-# KAPAS
+# 1. Project Title
 
-**Digital Production and Order Management System for Moriones-Inspired Local Artisans in Marinduque**
+**KAPAS (Kayas/Pukpok/Artisan): Digital Production and Order Management System for Moriones-Inspired Local Artisans in Marinduque**
 
-Web Systems and Technologies 1 final project, Marinduque State University, College of Information and Computing Sciences.
-Group: Wonder Kids (BSI/T-3C)
+Web Systems and Technologies 1 
 
-## Selected sector
+**Group Name:** WONDER KIDS
+
+---
+
+# 2. Selected Sector
 
 Tourism & Cultural Innovation
 
-## Problem
+---
 
-Morion masks and other Moriones-inspired crafts are part of Marinduque's cultural heritage and a source of income for local makers. Demand rises around the festival and drops afterwards. The systems we reviewed for handicrafts, inventory and sales were built for general retail or industrial businesses. None combines product listings, raw material tracking and customer order tracking for heritage craft production. We have not yet interviewed local mask-makers, so how artisans currently track materials and orders is still a hypothesis. The full problem analysis and references are in the project documentation.
+# 3. Brief Problem Description
 
-## Proposed solution
+Morion masks and other Moriones-inspired crafts are part of Marinduque's cultural heritage and a source of income for local makers. Demand rises around the Moriones Festival and drops during the off-peak season.
 
-KAPAS is a web app where artisans and small businesses manage their products, materials and customer orders in one place. A public catalog lets customers browse products and send an order request without visiting the maker.
+Moriones-inspired artisans in Marinduque still rely on manual, paper-based or separated records. Platforms such as Facebook and Instagram do not combine raw material tracking, product cataloging and customer order management in one system, and none of the studies we reviewed does this for heritage craft production.
 
-## Core functional features
+An interview with the owner of a small artisan shop showed that the shop lacks an organized way to monitor expenses, record customer orders, keep track of deadlines and monitor available resources.
 
-1. **Product catalog management.** Add, edit and delete products with a name, description, category, price, stock and photo. Products can be hidden from the public catalog.
-2. **Production and material tracking.** Record raw materials with a unit and a reorder level, add or use stock, see low-stock warnings, and record finished pieces, which adds them to a product's stock and can take the material used out of stock.
-3. **Customer order management.** Customer orders land in the seller's Orders page as Pending and move through In production, Ready for pickup and Completed. Completing an order takes its items out of stock. Orders for made-to-order items, or for more pieces than are in stock, are marked as made-to-order requests, and sellers can filter them.
-4. **Public online catalog.** Anyone can search and filter products and open a product page with its photos. Signed-in customers send order and made-to-order requests from the product page.
-5. **Accounts.** Exactly two account types, each with sign up, sign in, sign out and its own dashboard:
-   - **Artisan/Business (Seller):** individual makers, workshops and souvenir shops. Artisans and businesses are one account type with the same Seller Dashboard and the same rights: seller profile, products and product photos, materials, customer orders, made-to-order requests and order statuses. A shop or business name is optional.
-   - **Customer (Buyer):** browses the catalog, places orders and made-to-order requests, tracks order status, sees order history and manages a customer profile on the Customer Dashboard.
+---
 
-   Only sellers can add, edit or delete products and manage product photos, materials and order statuses. Only customers can place orders. The rules are checked in `js/shop.js` against the stored account, not only by hiding buttons. Accounts made before this change with the old Artisan or Business type are turned into Seller accounts the first time KAPAS opens, keeping all their products, materials, orders and passwords. Old backups restore the same way.
-6. **Search, filter and sort.** The catalog, Products, Materials and Orders pages each have a search box plus filters and sorting.
-7. **Live updates between pages.** When data changes in one tab, such as a new product photo, other open KAPAS tabs update without a refresh.
-8. **Backup and restore.** Export everything to a JSON file and restore it from the dashboard.
+# 4. Proposed Solution
 
-Excluded, as in the paper: online payments, delivery tracking, a mobile app, accounting and payroll, marketing analytics, and coverage beyond Marinduque artisans.
+KAPAS is a web-based production and order management system where artisans and small businesses manage their products, materials and customer orders in one place. A public online catalog lets customers browse products, view prices and availability, and submit order requests without visiting the maker in person.
 
-## Technologies used
+---
+
+# 5. Core Functional Features
+
+1. **Product Catalog Management.** Add, view, edit and delete products with a name, description, price, image and stock quantity.
+2. **Production and Material Inventory Tracking.** Record raw material supplies, monitor availability, and update material and product quantities.
+3. **Customer Order Management.** Orders appear in the artisan's Orders page as *Pending* and move through *In production*, *Ready for pickup* and *Completed*.
+4. **Online Product Catalog for Customers.** A public interface to browse products, view prices, details and availability, and submit order requests.
+
+**Additional implementation details** (beyond the four core features in the paper):
+
+- Two account types, Seller (artisan or business) and Customer (buyer), each with its own dashboard. Only sellers manage products, materials and order statuses. Only signed-in customers place orders.
+- Search, filter and sort on the catalog, Products, Materials and Orders pages.
+- Backup and restore of all data as a JSON file.
+- Live updates between open tabs without a refresh.
+- Extra order statuses (*Declined*, *Cancelled*), made-to-order requests, product categories, hidden products, and on-screen low-stock warnings.
+
+**Limitations:** data is stored only in the local browser (no multi-device sync); sign-in is local and not a replacement for server-side authentication; no SMS or email notifications; no online payment gateway; images are stored locally; clearing browser data erases everything, so use the backup button.
+
+**Out of scope:** online payment processing, delivery and courier tracking, a mobile application, accounting and payroll, marketing analytics, and coverage beyond Marinduque artisans.
+
+---
+
+# 6. Technologies Used
 
 | Technology | Role |
 |---|---|
-| HTML5, CSS3 | Page structure; shared design system in `styles/` plus one stylesheet per page in `pages/` |
+| HTML5, CSS3 | Page structure and responsive styling |
 | Vanilla JavaScript (ES modules) | All behavior, with no framework and no build step |
-| IndexedDB | Stores accounts, products, materials and orders in the browser |
-| BroadcastChannel | Tells other open tabs to reload when data changes |
-| Web Crypto (PBKDF2) | Salted password hashing |
-| `serve` | Small static web server used by `npm start` (CodeSandbox and local) |
-| Node test runner and fake-indexeddb | Automated tests of the data and business logic |
+| IndexedDB | Primary browser storage for accounts, products, materials and orders |
+| LocalStorage | Retains selected information across browser sessions |
+| BroadcastChannel API | Syncs updates across open tabs |
+| Web Crypto API (PBKDF2) | Salted password hashing |
+| `serve` | Static web server used by `npm start` |
+| Node test runner, fake-indexeddb | Automated tests of the data and business logic |
 
-The justification and comparison for these choices is in the project documentation.
+Development followed the SDLC framework with the T.R.A.C.E. Method for requirement analysis, using Visual Studio Code.
 
-## Project structure
+---
 
-```
-index.html  product.html  login.html          Public pages (storefront, product, sign in)
-dashboard.html  products.html                  Artisan/Business (Seller) workspace pages
-materials.html  orders.html  profile.html
-customer.html                                  Customer (Buyer) dashboard: orders, history, profile
-assets/          Logo, favicon and the Morion mask photo
-styles/          Shared design system
-  tokens.css       colours, fonts, radii, shadows
-  base.css         reset, typography, accessibility helpers, animations
-  components.css   buttons, form fields, panels, tables, pills, dialogs, toasts
-  layout.css       seller sidebar, storefront header and footer
-  main.css         imports the four files above
-pages/           One folder per page: <page>.js (behavior) and <page>.css (page-only styles)
-  storefront/  product/  auth/  dashboard/  products/  materials/  orders/  profile/  customer/
-js/              Shared modules
-  store.js         IndexedDB data layer and cross-tab sync
-  auth.js          accounts, password hashing, sessions, page guard
-  shop.js          business rules for products, orders and materials
-  filters.js       search, filter and sort helpers
-  ui.js            escaping, money format, toasts, dialogs, form errors, photo compression
-  layout.js        sidebar, storefront header and footer
-  icons.js         inline SVG icons
-test/            Node tests for the data layer, business rules and filters
-.codesandbox/    CodeSandbox setup and start tasks
-serve.json       Static server settings
-```
+# 7. Installation or Running Instructions
 
-Business rules live only in `js/shop.js` and `js/auth.js`. Pages call them and never change data directly.
+## Option A: Run online (no installation)
 
-## Limitations
+Open the deployed version on Vercel: **https://kapas-amber.vercel.app/index.html**
 
-- **Data stays on one device.** There is no server or shared database. A customer on another phone cannot see an artisan's catalog. For a demo, use one browser with several tabs.
-- **Sign-in is local.** Passwords are hashed, every protected page checks the account type, and the business rules check it again, but anyone with access to the browser's developer tools can read or change the stored data. It is not a replacement for server-side authentication.
-- **Clearing browser data erases everything.** Use the backup button.
-- **Sellers can decline an order.** An order can end as Declined when the seller cannot take it, or as Cancelled by the customer before pickup. The rest of the status flow follows the paper.
-- **Materials are not linked to products automatically.** The amount of material used is entered when finished pieces are recorded.
-- **Operational validation with mask-makers has not been done yet.**
-- Layout, forms and photo upload were checked in Chromium on desktop, tablet and phone widths.
+Use a modern browser such as Microsoft Edge or Chrome. Data is stored in your own browser (IndexedDB), so records you create are only visible on that device and browser.
 
-## Group members
+## Option B: Run locally
+
+**Requirements:** Node.js (LTS) and a modern browser such as Microsoft Edge or Chrome.
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/rorikae-busy/KAPAS.git
+   cd KAPAS
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the local server:
+   ```bash
+   npm start
+   ```
+4. Open the address shown in the terminal (usually `http://localhost:3000`) in your browser.
+5. *(Optional)* Run the automated tests:
+   ```bash
+   npm test
+   ```
+
+**Notes:**
+- The app must be opened through the local server, not by double-clicking `index.html`, because it uses ES modules.
+- It can also be run in CodeSandbox using the setup in `.codesandbox/`.
+- Data is stored in the browser, so to demo both roles, create a Seller and a Customer account in the same browser and use several tabs.
+
+---
+
+# 8. Group Members
+
+Group: Wonder Kids (BSI/T-3C)
 
 - LAYAG, Brex T.
 - LECAROS, Christine Anne Quezaine O.
@@ -98,12 +117,16 @@ Business rules live only in `js/shop.js` and `js/auth.js`. Pages call them and n
 - PASTRANA, Ivan Emmanuel D.
 - ROSALES, Kayleigh Plurin F.
 
-## Documentation
+---
 
-- Full project documentation: `PROJECT_DOCUMENTATION.md`
-- Manuscript PDF: `docs/final-manuscript.pdf`
-- Author contributions: `CONTRIBUTIONS.md`
+# 9. Link to Full Project Documentation
 
-## AI disclosure
+- Full project documentation: [`PROJECT_DOCUMENTATION.md`](PROJECT_DOCUMENTATION.md)
+- Project paper manuscript: [`docs/final-manuscript.pdf`](docs/final-manuscript.pdf)
+- Author contributions: [`CONTRIBUTIONS.md`](CONTRIBUTIONS.md)
+
+---
+
+# 10. AI Disclosure Reference
 
 AI assistants were used in this project. The tool, task, prompt, output, validation and responsible member for each use are recorded in [`AI_DISCLOSURE.md`](AI_DISCLOSURE.md).
